@@ -1,0 +1,90 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "a2741fd5-fcef-45e7-bbbe-868a58ac2b35",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "d121e9ce-e48d-44ea-b488-460f33fcd987",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "A",
+                    "type": "Button",
+                    "id": "bf61c0cc-d545-4376-bac0-ba205eaa4ff5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.2,behavior=2)"
+                },
+                {
+                    "name": "LT",
+                    "type": "Value",
+                    "id": "d6ec99b8-69c7-4999-99a2-e21344153188",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.1,behavior=2)"
+                },
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "53a3a942-fd4a-4510-be2d-7bf037f672f4",
+                    "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7203d5c5-63d6-4f01-a403-3eda193dd0c3",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4db6674c-0843-4def-a3c9-7d2bcaf6f5db",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06644771-b299-45d5-b97a-c6fe28be3392",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b7b164f-27b5-46c8-bd1a-eedd6a2a9d60",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
