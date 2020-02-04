@@ -5,9 +5,13 @@ using UnityEngine;
 public class moveAim : MonoBehaviour
 {
     public bool canAim;
+
+    public float radius;
     // Start is called before the first frame update
 
     private SpriteRenderer reticle;
+
+    GameObject parent;
 
     //private Rigidbody2D rb;
 
@@ -15,6 +19,7 @@ public class moveAim : MonoBehaviour
     void Start()
     {
         //rb = GetComponent<Rigidbody2D>();
+        parent = gameObject.transform.parent.gameObject;
         canAim = false;
         reticle = GetComponent<SpriteRenderer>();
         reticle.enabled = false;
@@ -41,6 +46,22 @@ public class moveAim : MonoBehaviour
         //rb.MovePosition(rb.position + val  * Time.fixedDeltaTime);
         Vector3 tmp = new Vector3(val[0], val[1], 0f) * Time.fixedDeltaTime;
         gameObject.transform.Translate(tmp);
+
+        float distance = Vector2.Distance(gameObject.transform.position, parent.transform.position);
+
+        Debug.Log("distance: " + distance + "\t radius: "+ radius);
+
+        if (distance>radius)
+        {
+            Vector3 distV = gameObject.transform.position - parent.transform.position;
+            distV *= radius / distance;
+            gameObject.transform.position = parent.transform.position + distV;
+            Debug.Log("new pos " + gameObject.transform.position);
+        }
+        else
+        {
+            Debug.Log("pos " + gameObject.transform.position);
+        }
     }
 
 }
