@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public int health;
+    public int mana;
     public float speed;
     public float aimSpeed;
     public float aimRange;
-
-    private float moveUD;
-    private float moveLR;
 
     private Vector2 moveInput;
 
@@ -22,13 +22,19 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private GameObject PIM;
+    private GameObject PIM; //player input manager
 
     private int player_num;
 
 
-    
 
+    // UI ---------------------------------------------
+    private GameObject UI;
+    private UImanager UIscript;
+
+
+
+   
 
     private bool aiming;
     // Start is called before the first frame update
@@ -37,7 +43,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log("p1 start");
 
         PIM = GameObject.Find("PlayerInputManager");
-        player_num = PIM.GetComponent<playerAssign>().numPlayers;
+        UI = GameObject.Find("UI");
+        UIscript = UI.GetComponent<UImanager>();
+        player_num = PIM.GetComponent<playerAssign>().numPlayers-1;
         characterSetup(player_num);
 
     }
@@ -46,17 +54,24 @@ public class PlayerController : MonoBehaviour
     {
         //knight = 1; dragon = 2;
         rb = GetComponent<Rigidbody2D>();
-        if (i == 1)
+        if (i == 0)
         {
+            health = 8;
+            mana = 5;
             //gameObject = new KnightController;
         }
-        else if (i == 2)
+        else if (i == 1)
         {
+            health = 15;
+            mana = 12;
             aimChild = gameObject.transform.GetChild(0).gameObject;
             aiming = false;
             //range of dragon
             aimChild.GetComponent<moveAim>().radius = aimRange;
         }
+
+        UIscript.limitHearts(player_num,health);
+        UIscript.limitMana(player_num, mana);
 
     }
 
@@ -72,6 +87,31 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
+
+
+
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("DmgPlayer"))
+        {
+            health -= 1;
+            Debug.Log("Health: " + health);
+            UIscript.setHearts(player_num, health);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("DmgPlayer"))
+        {
+            health -= 1;
+            Debug.Log("Health: " + health);
+            UIscript.setHearts(player_num, health);
+
+        }
     }
 
 
@@ -79,6 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         //Debug.Log("moving");
         moveInput = value.Get<Vector2>();
+        //Debug.Log("facing: " + moveInput);
         //rb.MovePosition(rb.position + moveInput * Time.fixedDeltaTime);
     }
     /*
@@ -100,11 +141,11 @@ public class PlayerController : MonoBehaviour
     private void OnLT(InputValue value)
     {
         //Debug.Log(value.Get<float>());
-        if (player_num == 1)
+        if (player_num == 0)
         {
             //knight
         }
-        else if (player_num == 2)
+        else if (player_num == 1)
         {
             //dragon
             aiming = !aiming;
@@ -127,11 +168,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnAim(InputValue value)
     {
-        if (player_num == 1)
+        if (player_num == 0)
         {
             //knight
         }
-        else if (player_num == 2)
+        else if (player_num == 1)
         {
             //dragon
             //Debug.Log(value.Get<Vector2>());
@@ -149,12 +190,12 @@ public class PlayerController : MonoBehaviour
     private void OnFire(InputValue value)
     {
 
-        if (player_num == 1)
+        if (player_num == 0)
         {
             //knight -- slash in current direction.
 
         }
-        else if (player_num == 2)
+        else if (player_num == 1)
         {
             //dragon  draw fireball to aim point
 
