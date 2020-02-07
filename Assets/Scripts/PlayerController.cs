@@ -18,6 +18,10 @@ public class PlayerController : MonoBehaviour
 
     private GameObject aimChild;
 
+    private GameObject swordChild;
+
+    private bool swing;
+
 
 
     private Rigidbody2D rb;
@@ -58,6 +62,7 @@ public class PlayerController : MonoBehaviour
         {
             health = 8;
             mana = 5;
+            swordChild = gameObject.transform.GetChild(1).gameObject;
             //gameObject = new KnightController;
         }
         else if (i == 1)
@@ -88,7 +93,21 @@ public class PlayerController : MonoBehaviour
     {
         rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
 
+        if (swing) {
+            Quaternion direc = new Quaternion(0,0,.45f,0);
+            Vector3 target = new Vector3(0, 0, 45);
+            Vector3 start = new Vector3(0, 0, -45);
 
+            swordChild.transform.Rotate(target * Time.fixedDeltaTime * 3);
+
+            Debug.Log(swordChild.transform.rotation.z + " > " + direc.z);
+
+            if (swordChild.transform.rotation.z >= direc.z)
+            {
+                swing = false;
+                swordChild.transform.rotation = Quaternion.Euler(start);
+            }
+        }
 
 
     }
@@ -193,6 +212,7 @@ public class PlayerController : MonoBehaviour
         if (player_num == 0)
         {
             //knight -- slash in current direction.
+            swing = true;
 
         }
         else if (player_num == 1)
