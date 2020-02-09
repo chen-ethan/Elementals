@@ -49,18 +49,18 @@ public class moveAim : MonoBehaviour
 
         float distance = Vector2.Distance(gameObject.transform.position, parent.transform.position);
 
-        Debug.Log("distance: " + distance + "\t radius: "+ radius);
+        //Debug.Log("distance: " + distance + "\t radius: "+ radius);
 
         if (distance>radius)
         {
             Vector3 distV = gameObject.transform.position - parent.transform.position;
             distV *= radius / distance;
             gameObject.transform.position = parent.transform.position + distV;
-            Debug.Log("new pos " + gameObject.transform.position);
+            //Debug.Log("new pos " + gameObject.transform.position);
         }
         else
         {
-            Debug.Log("pos " + gameObject.transform.position);
+            //Debug.Log("pos " + gameObject.transform.position);
         }
     }
 

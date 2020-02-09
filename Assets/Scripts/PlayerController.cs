@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Reflection;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,10 +18,13 @@ public class PlayerController : MonoBehaviour
     private Vector2 aimInput;
 
     private GameObject aimChild;
+    public Rigidbody2D DragonProjectile;
 
     private GameObject swordChild;
+    public float swingspeed;
 
     private bool swing;
+    private bool SwordOnFire;
 
 
 
@@ -37,7 +41,11 @@ public class PlayerController : MonoBehaviour
     private UImanager UIscript;
 
 
+    // Movement
 
+    public string direction; // up down left right
+
+    public Vector3 left, right, up, down;
    
 
     private bool aiming;
@@ -52,6 +60,14 @@ public class PlayerController : MonoBehaviour
         player_num = PIM.GetComponent<playerAssign>().numPlayers-1;
         characterSetup(player_num);
 
+
+        direction = "up";
+
+        //sword rotations
+        right = new Vector3(0,0,225);
+        left = new Vector3(0,0,45);
+        up = new Vector3(0,0,315);
+        down = new Vector3(0,0,135);
     }
 
     void characterSetup(int i)
@@ -71,6 +87,8 @@ public class PlayerController : MonoBehaviour
             mana = 12;
             aimChild = gameObject.transform.GetChild(0).gameObject;
             aiming = false;
+            swordChild = gameObject.transform.GetChild(1).gameObject;
+            swordChild.SetActive(false);
             //range of dragon
             aimChild.GetComponent<moveAim>().radius = aimRange;
         }
@@ -94,18 +112,24 @@ public class PlayerController : MonoBehaviour
         rb.MovePosition(rb.position + moveInput * speed * Time.fixedDeltaTime);
 
         if (swing) {
-            Quaternion direc = new Quaternion(0,0,.45f,0);
-            Vector3 target = new Vector3(0, 0, 45);
-            Vector3 start = new Vector3(0, 0, -45);
+            //swordChild.GetComponentInChildren<BoxCollider2D>().enabled = true;
+            //Quaternion direc = new Quaternion(0,0,.45f,0);
+            Vector3 start = (Vector3)this.GetType().GetField(direction).GetValue(this);
 
-            swordChild.transform.Rotate(target * Time.fixedDeltaTime * 3);
+            Vector3 target = start + new Vector3(0, 0, 90);
+            target.z = target.z%360;
+            swordChild.transform.Rotate(target, (Time.fixedDeltaTime * swingspeed * 45));
 
-            Debug.Log(swordChild.transform.rotation.z + " > " + direc.z);
+            //Debug.Log(swordChild.transform.rotation.eulerAngles.z + " > " + target.z);
 
-            if (swordChild.transform.rotation.z >= direc.z)
+            if (swordChild.transform.rotation.eulerAngles.z >= target.z && swordChild.transform.rotation.eulerAngles.z - target.z <=10)
             {
                 swing = false;
+                //swordChild.GetComponentInChildren<BoxCollider2D>().enabled = false;
                 swordChild.transform.rotation = Quaternion.Euler(start);
+                SwordOnFire = false;
+                swordChild.GetComponentInChildren<sword>().swing = false;
+                swordChild.transform.GetChild(0).tag = "Untagged";
             }
         }
 
@@ -114,20 +138,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+                //Debug.Log("collision");
+
         if (collision.gameObject.CompareTag("DmgPlayer"))
         {
             health -= 1;
-            Debug.Log("Health: " + health);
+            //Debug.Log("Health: " + health);
             UIscript.setHearts(player_num, health);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        //Debug.Log("trigger");
         if (collision.gameObject.CompareTag("DmgPlayer"))
         {
             health -= 1;
-            Debug.Log("Health: " + health);
+            //Debug.Log("Health: " + health);
             UIscript.setHearts(player_num, health);
 
         }
@@ -139,6 +167,31 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("moving");
         moveInput = value.Get<Vector2>();
         //Debug.Log("facing: " + moveInput);
+        
+        if(moveInput.x > 0){
+            if(Mathf.Abs(moveInput.y) < moveInput.x){
+                direction = "right";
+            }else if(moveInput.y > 0){
+                direction = "up";
+            }else direction = "down";
+        }else if(moveInput.x < 0){
+            if(Mathf.Abs(moveInput.y) < -1*moveInput.x){
+                direction = "left";
+            }else if(moveInput.y > 0){
+                direction = "up";
+            }else direction = "down";
+        }
+
+        if(player_num == 0){
+            if(direction == "left")swordChild.transform.eulerAngles = left;
+            else if(direction == "right")swordChild.transform.eulerAngles = right;
+            else if(direction == "down")swordChild.transform.eulerAngles = down;
+            else if(direction == "up")swordChild.transform.eulerAngles = up;
+        }
+
+        //Debug.Log(direction);
+        
+        
         //rb.MovePosition(rb.position + moveInput * Time.fixedDeltaTime);
     }
     /*
@@ -213,15 +266,29 @@ public class PlayerController : MonoBehaviour
         {
             //knight -- slash in current direction.
             swing = true;
+            swordChild.GetComponentInChildren<sword>().swing = true;
+
 
         }
         else if (player_num == 1)
         {
-            //dragon  draw fireball to aim point
+            //dragon draw fireball to aim point
+            if(aiming){
+                Rigidbody2D clone;
+                Vector2 dir = (aimChild.transform.position - transform.position).normalized;
+                var angle = Mathf.Atan2(-1*dir.x,dir.y) * Mathf.Rad2Deg;
+                clone = Instantiate(DragonProjectile,this.transform.position,Quaternion.Euler(0,0,angle));
+                clone.GetComponent<projectile>().target = aimChild.transform.position;
+                clone.GetComponent<projectile>().spawner = this.gameObject;
 
+
+                mana--;
+                UIscript.setMana(player_num, mana);
+
+            }else{//slash or whatever melee
+
+            }
         }
-            Debug.Log("nothing");
-
 
     }
 }
