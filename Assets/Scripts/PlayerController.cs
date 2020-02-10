@@ -48,17 +48,33 @@ public class PlayerController : MonoBehaviour
     public Vector3 left, right, up, down;
    
 
+
+
+    // Animation  ---------------------------------------------
+    Animator animator;
+    public RuntimeAnimatorController KnightAnim;
+    public RuntimeAnimatorController DragonAnim;
+    
+
+    [SerializeField]
+    private CapsuleCollider2D dragonHorizCol;
+
+    [SerializeField]
+    private CapsuleCollider2D dragonVertCol;
+
     private bool aiming;
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("p1 start");
+        animator = this.GetComponent<Animator>();
 
         PIM = GameObject.Find("PlayerInputManager");
         UI = GameObject.Find("UI");
         UIscript = UI.GetComponent<UImanager>();
         player_num = PIM.GetComponent<playerAssign>().numPlayers-1;
         characterSetup(player_num);
+
 
 
         direction = "up";
@@ -79,7 +95,7 @@ public class PlayerController : MonoBehaviour
             health = 8;
             mana = 5;
             swordChild = gameObject.transform.GetChild(1).gameObject;
-            //gameObject = new KnightController;
+            //gameObject.AddComponent<KnightController>();
         }
         else if (i == 1)
         {
@@ -91,6 +107,9 @@ public class PlayerController : MonoBehaviour
             swordChild.SetActive(false);
             //range of dragon
             aimChild.GetComponent<moveAim>().radius = aimRange;
+            Debug.Log("animator: "+ animator);
+            animator.runtimeAnimatorController = DragonAnim as RuntimeAnimatorController;
+
         }
 
         UIscript.limitHearts(player_num,health);
@@ -183,10 +202,35 @@ public class PlayerController : MonoBehaviour
         }
 
         if(player_num == 0){
-            if(direction == "left")swordChild.transform.eulerAngles = left;
-            else if(direction == "right")swordChild.transform.eulerAngles = right;
-            else if(direction == "down")swordChild.transform.eulerAngles = down;
-            else if(direction == "up")swordChild.transform.eulerAngles = up;
+            if(direction == "left"){
+                swordChild.transform.eulerAngles = left;
+            }else if(direction == "right"){
+                swordChild.transform.eulerAngles = right;
+            }else if(direction == "down"){
+                swordChild.transform.eulerAngles = down;
+
+            }else if(direction == "up"){
+                swordChild.transform.eulerAngles = up;
+            }
+        }else if(player_num == 1){
+
+            if(direction == "left"){
+                animator.SetInteger("Direction", 3);
+                dragonHorizCol.enabled = true;
+                dragonVertCol.enabled = false;
+            }else if(direction == "right"){
+                animator.SetInteger("Direction", 1);
+                dragonHorizCol.enabled = true;
+                dragonVertCol.enabled = false;
+            }else if(direction == "down"){
+                animator.SetInteger("Direction", 2);
+                dragonHorizCol.enabled = false;
+                dragonVertCol.enabled = true;
+            }else if(direction == "up"){
+                animator.SetInteger("Direction", 0);
+                dragonHorizCol.enabled = false;
+                dragonVertCol.enabled = true;
+            }
         }
 
         //Debug.Log(direction);
