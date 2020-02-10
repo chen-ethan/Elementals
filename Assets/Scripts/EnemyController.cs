@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collision){
-        if(collision.gameObject.name == "Sword"){
+        if(collision.gameObject.name == "Sword" && collision.gameObject.GetComponent<sword>().swing){
             takeDmg(2);
         }else if(collision.gameObject.name == "FireBall(Clone)"){
             takeDmg(1);

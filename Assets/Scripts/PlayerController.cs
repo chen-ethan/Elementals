@@ -62,6 +62,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private CapsuleCollider2D dragonVertCol;
 
+    private Collider2D col;
+
     private bool aiming;
     // Start is called before the first frame update
     void Start()
@@ -84,6 +86,8 @@ public class PlayerController : MonoBehaviour
         left = new Vector3(0,0,45);
         up = new Vector3(0,0,315);
         down = new Vector3(0,0,135);
+
+        col = dragonHorizCol;
     }
 
     void characterSetup(int i)
@@ -149,6 +153,8 @@ public class PlayerController : MonoBehaviour
                 SwordOnFire = false;
                 swordChild.GetComponentInChildren<sword>().swing = false;
                 swordChild.transform.GetChild(0).tag = "Untagged";
+                swordChild.transform.GetChild(0).gameObject.SetActive(false);
+
             }
         }
 
@@ -171,7 +177,7 @@ public class PlayerController : MonoBehaviour
     {
 
         //Debug.Log("trigger");
-        if (collision.gameObject.CompareTag("DmgPlayer"))
+        if (collision.IsTouching(col) && collision.gameObject.CompareTag("DmgPlayer"))
         {
             health -= 1;
             //Debug.Log("Health: " + health);
@@ -218,18 +224,23 @@ public class PlayerController : MonoBehaviour
                 animator.SetInteger("Direction", 3);
                 dragonHorizCol.enabled = true;
                 dragonVertCol.enabled = false;
+                col = dragonHorizCol;
             }else if(direction == "right"){
                 animator.SetInteger("Direction", 1);
                 dragonHorizCol.enabled = true;
                 dragonVertCol.enabled = false;
+                col = dragonHorizCol;
             }else if(direction == "down"){
                 animator.SetInteger("Direction", 2);
                 dragonHorizCol.enabled = false;
                 dragonVertCol.enabled = true;
+                col = dragonVertCol;
+
             }else if(direction == "up"){
                 animator.SetInteger("Direction", 0);
                 dragonHorizCol.enabled = false;
                 dragonVertCol.enabled = true;
+                col = dragonVertCol;
             }
         }
 
@@ -308,10 +319,12 @@ public class PlayerController : MonoBehaviour
 
         if (player_num == 0)
         {
+            if(!swing){
             //knight -- slash in current direction.
-            swing = true;
-            swordChild.GetComponentInChildren<sword>().swing = true;
-
+                swordChild.transform.GetChild(0).gameObject.SetActive(true);
+                swing = true;
+                swordChild.GetComponentInChildren<sword>().swing = true;
+            }
 
         }
         else if (player_num == 1)

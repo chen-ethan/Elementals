@@ -1987,7 +1987,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.2
+  orthographic size: 2.16
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2031,6 +2031,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHelper: {fileID: 519420030}
   moveSpeed: 0.1
+  PIM: {fileID: 421952588}
+  targets: []
+  offset: {x: 0, y: 0, z: 0}
+  smoothTime: 0.15
+  minZoom: 2
+  maxZoom: 5
 --- !u!1 &521868394
 GameObject:
   m_ObjectHideFlags: 0

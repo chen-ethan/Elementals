@@ -10,7 +10,7 @@
                     "type": "Value",
                     "id": "d121e9ce-e48d-44ea-b488-460f33fcd987",
                     "expectedControlType": "Stick",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "interactions": ""
                 },
                 {
