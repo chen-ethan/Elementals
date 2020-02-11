@@ -1,25 +1,19 @@
 fileFormatVersion: 2
-guid: e59a7a7206f248544b48dbda368780e3
+guid: 9cf748615822eff4d8cabc8e0e5a7dbe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7205319217530701175
-    second: Forest_Boss_Spreadsheet_0
+      213: -8483713636229447568
+    second: Forest_Boss
   - first:
-      213: 6201587409741619127
-    second: Forest_Boss_Spreadsheet_1
+      213: -4869167827880145500
+    second: Forest_Boss_Right
   - first:
-      213: -2656355087208900133
-    second: Forest_Boss_Left
+      213: -1507051544237687271
+    second: Forest_Boss Right Hand on Fire First Spreadsheet_2
   - first:
-      213: -2548898316662959569
-    second: Forest_Boss_Both
-  - first:
-      213: 7586693332768783547
-    second: Forest_Boss_Dead
-  - first:
-      213: 7934695333633665015
-    second: Forest_Boss_Spreadsheet_5
+      213: -3007020795262309574
+    second: Forest_Boss Right Hand on Fire First Spreadsheet_3
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -128,49 +122,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Forest_Boss_Spreadsheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 256
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bcdfc9f3686179b46bfaa700b6bea1cd
-      internalID: 7205319217530701175
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Forest_Boss_Spreadsheet_1
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 256
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8d6f05e2622e7647bba3c124193aaeb
-      internalID: 6201587409741619127
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Forest_Boss_Left
+      name: Forest_Boss
       rect:
         serializedVersion: 2
         x: 0
@@ -178,41 +130,41 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcb981d900f061648bd07cee13a69e98
-      internalID: -2656355087208900133
+      spriteID: 2bee87e88b10f324daae523f406eac09
+      internalID: -8483713636229447568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Forest_Boss_Both
+      name: Forest_Boss_Right
       rect:
         serializedVersion: 2
         x: 128
-        y: 128
+        y: 127
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d23282242782dd4ca7adbc32ba6526b
-      internalID: -2548898316662959569
+      spriteID: 7399d92c58d283c4aa1347fd427c5268
+      internalID: -4869167827880145500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Forest_Boss_Dead
+      name: Forest_Boss Right Hand on Fire First Spreadsheet_2
       rect:
         serializedVersion: 2
         x: 0
@@ -220,20 +172,20 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef6981b76dbb16f43bbb80d40f4d447d
-      internalID: 7586693332768783547
+      spriteID: 7b6aeb2750248a54f8893dc062db8d56
+      internalID: -1507051544237687271
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Forest_Boss_Spreadsheet_5
+      name: Forest_Boss Right Hand on Fire First Spreadsheet_3
       rect:
         serializedVersion: 2
         x: 128
@@ -241,14 +193,14 @@ TextureImporter:
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92a2ffc724eedc7498df6353005019f7
-      internalID: 7934695333633665015
+      spriteID: abfe2d776e9734549a083b4bf0bdb183
+      internalID: -3007020795262309574
       vertices: []
       indices: 
       edges: []

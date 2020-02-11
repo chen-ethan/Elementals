@@ -100,6 +100,9 @@ public class PlayerController : MonoBehaviour
             mana = 5;
             swordChild = gameObject.transform.GetChild(1).gameObject;
             //gameObject.AddComponent<KnightController>();
+
+            dragonHorizCol.enabled = false;
+            dragonVertCol.enabled = true;
         }
         else if (i == 1)
         {
@@ -330,7 +333,7 @@ public class PlayerController : MonoBehaviour
         else if (player_num == 1)
         {
             //dragon draw fireball to aim point
-            if(aiming){
+            if(aiming && mana > 0){
                 Rigidbody2D clone;
                 Vector2 dir = (aimChild.transform.position - transform.position).normalized;
                 var angle = Mathf.Atan2(-1*dir.x,dir.y) * Mathf.Rad2Deg;
