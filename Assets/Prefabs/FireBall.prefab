@@ -135,3 +135,4 @@ MonoBehaviour:
   speed: 5
   spawner: {fileID: 0}
   target: {x: 0, y: 0}
+  dmg: 2

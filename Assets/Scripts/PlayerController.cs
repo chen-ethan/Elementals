@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     public float swingspeed;
 
     private bool swing;
+
+    private Vector3 start;
+    private Vector3 target;
     private bool SwordOnFire;
 
 
@@ -140,10 +143,7 @@ public class PlayerController : MonoBehaviour
         if (swing) {
             //swordChild.GetComponentInChildren<BoxCollider2D>().enabled = true;
             //Quaternion direc = new Quaternion(0,0,.45f,0);
-            Vector3 start = (Vector3)this.GetType().GetField(direction).GetValue(this);
-
-            Vector3 target = start + new Vector3(0, 0, 90);
-            target.z = target.z%360;
+            
             swordChild.transform.Rotate(target, (Time.fixedDeltaTime * swingspeed * 45));
 
             //Debug.Log(swordChild.transform.rotation.eulerAngles.z + " > " + target.z);
@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour
                 swordChild.GetComponentInChildren<sword>().swing = false;
                 swordChild.transform.GetChild(0).tag = "Untagged";
                 swordChild.transform.GetChild(0).gameObject.SetActive(false);
+                swordDir();
 
             }
         }
@@ -186,6 +187,18 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Health: " + health);
             UIscript.setHearts(player_num, health);
 
+        }else if(collision.gameObject.tag == "Potion_Health"){
+            health += 2;
+            //Debug.Log("Health: " + health);
+            UIscript.setHearts(player_num, health);
+            Destroy(collision.gameObject);
+
+        }else if(collision.gameObject.tag == "Potion_Mana"){
+            mana += 2;
+            //Debug.Log("Health: " + health);
+            UIscript.setMana(player_num, mana);
+            Destroy(collision.gameObject);
+
         }
     }
 
@@ -210,17 +223,11 @@ public class PlayerController : MonoBehaviour
             }else direction = "down";
         }
 
-        if(player_num == 0){
-            if(direction == "left"){
-                swordChild.transform.eulerAngles = left;
-            }else if(direction == "right"){
-                swordChild.transform.eulerAngles = right;
-            }else if(direction == "down"){
-                swordChild.transform.eulerAngles = down;
+        if(player_num == 0 && ! swing ){
+            swordDir();
 
-            }else if(direction == "up"){
-                swordChild.transform.eulerAngles = up;
-            }
+
+            
         }else if(player_num == 1){
 
             if(direction == "left"){
@@ -251,6 +258,18 @@ public class PlayerController : MonoBehaviour
         
         
         //rb.MovePosition(rb.position + moveInput * Time.fixedDeltaTime);
+    }
+
+    private void swordDir(){
+        if(direction == "left"){
+            swordChild.transform.eulerAngles = left;
+        }else if(direction == "right"){
+            swordChild.transform.eulerAngles = right;
+        }else if(direction == "down"){
+            swordChild.transform.eulerAngles = down;
+        }else if(direction == "up"){
+            swordChild.transform.eulerAngles = up;
+        }
     }
     /*
     private void OnA(InputValue value)
@@ -306,6 +325,7 @@ public class PlayerController : MonoBehaviour
         {
             //dragon
             //Debug.Log(value.Get<Vector2>());
+//            Debug.Log("aiming");
             aimChild.GetComponent<moveAim>().aimVec = value.Get<Vector2>() * aimSpeed;
         }
             /*
@@ -327,6 +347,10 @@ public class PlayerController : MonoBehaviour
                 swordChild.transform.GetChild(0).gameObject.SetActive(true);
                 swing = true;
                 swordChild.GetComponentInChildren<sword>().swing = true;
+                start = (Vector3)this.GetType().GetField(direction).GetValue(this);
+
+                target = start + new Vector3(0, 0, 90);
+                target.z = target.z%360;
             }
 
         }

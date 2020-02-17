@@ -8,6 +8,8 @@ public class projectile : MonoBehaviour
 
     public GameObject spawner;
     public Vector2 target;
+
+    public int dmg;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +28,27 @@ public class projectile : MonoBehaviour
     }
 
 
+    /*
     void OnCollisionEnter2D(Collision2D col){
-        Destroy(gameObject);
-    }
-    void OnTriggerEnter2D(Collider2D col){
+        if(col.gameObject.tag == "DmgPlayer"){
+            col.gameObject.GetComponent<EnemyController>().takeDmg(dmg);
+        }
         if(col.gameObject != spawner){
             Destroy(gameObject);
 
         }
     }
+    */
+    
+    void OnTriggerEnter2D(Collider2D col){
+        if(col.gameObject.tag == "DmgPlayer"){
+            col.gameObject.GetComponent<EnemyController>().takeDmg(dmg);
+        }
+        if(col.gameObject != spawner && col.gameObject.tag != "ignore"){
+            Destroy(gameObject);
+
+        }
+    }
+      
 
 }

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - DmgPlayer
   - Flame
+  - ignore
+  - Potion_Health
+  - Potion_Mana
   layers:
   - Default
   - TransparentFX

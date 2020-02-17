@@ -8,15 +8,35 @@ public class EnemyController : MonoBehaviour
     public int Health;
     public int Attack;
 
+    public float speed;
+
+    public Transform target;
+
+    private Vector2 movement;
+    private Rigidbody2D rb;
     void Start()
     {
-        
+        rb = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(target){
+            Vector3 Direction = target.position - transform.position;
+            Direction.Normalize();
+            movement = Direction;
+        }
+    }
+
+    private void FixedUpdate(){
+        if(target){
+            move(movement);
+        }
+    } 
+
+    void move(Vector2 dir){
+        rb.MovePosition((Vector2) transform.position + (dir * speed * Time.deltaTime));
     }
 
     public void takeDmg(int amt){
@@ -38,13 +58,9 @@ public class EnemyController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collision){
-        if(collision.gameObject.name == "Sword" && collision.gameObject.GetComponent<sword>().swing){
-            takeDmg(2);
-        }else if(collision.gameObject.name == "FireBall(Clone)"){
-            takeDmg(1);
+        if(!target && collision.gameObject.tag == "Player"){
+            target = collision.gameObject.transform;
         }
-        else{
-            Debug.Log(collision.gameObject.name);
-        }
+        
     }
 }
